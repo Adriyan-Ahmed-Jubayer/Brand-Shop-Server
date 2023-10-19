@@ -40,7 +40,13 @@ const client = new MongoClient(uri, {
 const dbConnect = async () => {
   try {
 
-    
+    const ProductCollection = client.db('BrandShopDB').collection('Products');
+
+    app.get('/products', async(req, res) => {
+      const cursor = ProductCollection.find();
+      const result = await cursor.toArray();
+      res.send(result)
+    })
 
       app.post('/products', async(req, res) => {
         const product = req.body;
