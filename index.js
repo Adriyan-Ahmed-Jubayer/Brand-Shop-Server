@@ -41,6 +41,7 @@ const dbConnect = async () => {
   try {
 
     const ProductCollection = client.db('BrandShopDB').collection('Products');
+    const UsersCollection = client.db('BrandShopDB').collection('usersCollection');
 
     app.get('/products', async(req, res) => {
       const cursor = ProductCollection.find();
@@ -64,10 +65,16 @@ const dbConnect = async () => {
 
       app.post('/products', async(req, res) => {
         const product = req.body;
-        console.log(product); 
         const result = await ProductCollection.insertOne(product);
         res.send(result);
         
+      })
+
+      app.post('/collections', async(req, res) => {
+        const item = req.body;
+        console.log(item);
+        const result = await UsersCollection.insertOne(item);
+        res.send(result);
       })
 
 
