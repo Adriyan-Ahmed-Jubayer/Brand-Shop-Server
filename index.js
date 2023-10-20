@@ -63,6 +63,13 @@ const dbConnect = async () => {
       res.send(result);
     })
 
+    app.get('/collections/:email', async(req, res) => {
+      const email = req.params.email;
+      const query = {email : email};
+      const result = await UsersCollection.find(query).toArray();
+      res.send(result);
+    })
+
       app.post('/products', async(req, res) => {
         const product = req.body;
         const result = await ProductCollection.insertOne(product);
