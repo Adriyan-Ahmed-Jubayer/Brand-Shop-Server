@@ -47,6 +47,14 @@ const dbConnect = async () => {
       const result = await cursor.toArray();
       res.send(result)
     })
+     
+    app.get('/products/:brand', async(req, res) => {
+      const brand = req.params.brand;
+      console.log(brand);
+      const query = { brand : brand };
+      const result = await ProductCollection.find(query).toArray();
+      res.send(result);
+    })
 
       app.post('/products', async(req, res) => {
         const product = req.body;
