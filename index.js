@@ -83,9 +83,29 @@ const dbConnect = async () => {
         res.send(result);
       })
 
+
+      app.put('/products/:brand/:id', async(req, res) => {
+        const id = req.params.id;
+        const query = {_id : new ObjectId(id)};
+        const options = {upsert: true};
+        const updatedProduct = req.body;
+        const product = {
+          $set: {
+             name: updatedProduct.name,
+             brand: updatedProduct.brand,
+             price: updatedProduct.price,
+             image: updatedProduct.image,
+             type: updatedProduct.type,
+             rating: updatedProduct.rating,
+             shortDescription: updatedProduct.shortDescription,
+          }
+        }
+        const result = await ProductCollection.updateOne(query,product, options);
+        res.send(result);
+      })
+
       app.delete('/collections/:id', async(req, res) => {
         const id = req.params.id;
-        console.log(id);
         const query = {_id: new ObjectId(id)};
         const result = await UsersCollection.deleteOne(query);
         res.send(result)
