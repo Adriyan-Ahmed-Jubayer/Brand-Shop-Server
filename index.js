@@ -63,9 +63,9 @@ const dbConnect = async () => {
       res.send(result);
     })
 
-    app.get('/collections/:email', async(req, res) => {
-      const email = req.params.email;
-      const query = {email : email};
+    app.get('/collections/:uid', async(req, res) => {
+      const uid = req.params.uid;
+      const query = {uid : uid};
       const result = await UsersCollection.find(query).toArray();
       res.send(result);
     })
@@ -79,9 +79,16 @@ const dbConnect = async () => {
 
       app.post('/collections', async(req, res) => {
         const item = req.body;
-        console.log(item);
         const result = await UsersCollection.insertOne(item);
         res.send(result);
+      })
+
+      app.delete('/collections/:id', async(req, res) => {
+        const id = req.params.id;
+        console.log(id);
+        const query = {_id: new ObjectId(id)};
+        const result = await UsersCollection.deleteOne(query);
+        res.send(result)
       })
 
 
